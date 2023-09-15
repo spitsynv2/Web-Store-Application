@@ -1,0 +1,38 @@
+<%- include('../../fragments/headerProducts.ejs')%>
+        <main>
+            <h2>Lista produktów</h2>
+            <table class="table-list">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Expiration_date</th>
+                        <th>Type</th>
+                        <th class="actions">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <%for (let product of products) { %>
+                    <tr>
+                        <td><%=product.Id%></td>
+                        <td><%=product.Name%></td>
+                        <td><%=product.Cena%></td>
+                        <td class="tdDate"><%= product.Expiration_date.toISOString().split('T')[0]%></td>
+                        <td><%=product.Type%></td>
+
+                        <td class="actions">
+                            <ul class="list-actions">
+                                <li><a href="/products/details/<%=product.Id%>" class="list-actions-button-details">Szczególy</a></li>
+                                <li><a href="/products/edit/<%=product.Id%>" class="list-actions-button-edit">Edytuj</a></li>
+                                <li><a href="/products/delete/<%=product.Id%>" class="list-actions-button-delete">Usuń</a></li>
+                            </ul>
+                        </td>
+
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+          <p><a href="/products/add" class="button-add">Dodaj nowy produkt</a></p>
+        </main>
+<%- include('../../fragments/footer.ejs')%>

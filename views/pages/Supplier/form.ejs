@@ -1,0 +1,99 @@
+<%- include('../../fragments/headerSupplier.ejs') %>
+        <main>
+            <h2><%=pageTitle%></h2>
+            <form class="form" method="post" action="<%=formAction%>" novalidate>
+                <tr>
+                    <td>
+                        <input type="hidden" name="Id" id="Id" value="<%=supplier.Id%>" required/>
+                    </td>
+                    <td>
+                        <label for="Name">Name: <span class="symbol-required">*</span></label>
+                        <input type="text" name="Name" id="Name" placeholder="2-60 znaków" value="<%=supplier.Name%>" class="<%= validationErrors.find(e=> e.path.includes('Name')) ?'error-input' : ''%>" <%= (formMode == 'showDetails') ? 'disabled' : ''%> required />
+                        <span id="errorName" class="errors-text">
+                            <%if(validationErrors.find(e=> e.path.includes('Name'))) {%>
+                            <%=validationErrors.find(e=> e.path.includes('Name')).message%>
+                            <%}%>
+                        </span>
+                    </td>
+                    <td>
+                        <label for="Country_of_origin">Country_of_origin: <span class="symbol-required">*</span></label>
+                        <input type="text" name="Country_of_origin" id="Country_of_origin" placeholder="2-60 znaków" class="<%= validationErrors.find(e=> e.path.includes('Country_of_origin')) ?'error-input' : ''%>" value="<%=supplier.Country_of_origin%>" <%= (formMode == 'showDetails') ? 'disabled' : ''%> required />
+                        <span id="errorCountry_of_origin" class="errors-text">
+                            <%if(validationErrors.find(e=> e.path.includes('Country_of_origin'))) {%>
+                            <%=validationErrors.find(e=> e.path.includes('Country_of_origin')).message%>
+                            <%}%>
+                        </span>
+                    </td>
+                    <td>
+                        <label for="International">International: <span class="symbol-required">*</span></label>
+                        <select name="International" id="International" class="<%= validationErrors.find(e=> e.path.includes('International')) ?'error-input' : ''%> " <%= (formMode == 'showDetails') ? 'disabled' : ''%>  required>
+                        <option value="<%=-1%>" <%= (formMode == 'showDetails') ? 'disabled' : ''%> selected>-- Select option --</option>
+                        <option value="<%=1%>" <%= (formMode == 'showDetails') ? 'disabled' : ''%> <%= (supplier.International == 1) ? 'selected' : ''%> label="True"></option>
+                        <option value="<%=0%>" <%= (formMode == 'showDetails') ? 'disabled' : ''%> <%= (supplier.International == 0) ? 'selected' : ''%> label="False"></option>
+                        </select>
+                        <span id="errorInternational" class="errors-text">
+                            <%if(validationErrors.find(e=> e.path.includes('International'))) {%>
+                            <%=validationErrors.find(e=> e.path.includes('International')).message%>
+                            <%}%>
+                        </span>
+                    </td>
+                    <td>
+                        <label for="Delivery_cost">Delivery_cost: </label>
+                        <input type="number" name="Delivery_cost" id="Delivery_cost" step="5" placeholder="np. 300" class="<%= validationErrors.find(e=> e.path.includes('Delivery_cost')) ?'error-input' : ''%>" value="<%=supplier.Delivery_cost%> " <%= (formMode == 'showDetails') ? 'disabled' : ''%>/>
+                        <span id="errorDelivery_cost" class="errors-text">
+                            <%if(validationErrors.find(e=> e.path.includes('Delivery_cost'))) {%>
+                            <%=validationErrors.find(e=> e.path.includes('Delivery_cost')).message%>
+                            <%}%>
+                        </span>
+                    </td>
+                </tr>
+
+                <div class="form-buttons">
+                    <p id="errorsSummary" class="<%= validationErrors.length > 0 ?'errors-text' : ''%>">
+                        <%= validationErrors.length > 0 ?'Formularz zawiera błędy' : ''%>
+                    </p>
+
+                    <%if(formMode != 'showDetails') {%>
+                    <input type="submit" value="<%=btnLabel%>" class="form-button-submit" />
+                    <a href="/suppliers" class="form-button-cancel"> Anuluj</a>
+                    <%}else {%>
+                    <p><a href="/suppliers/edit/<%=supplier.Id%>" class="edit-button"> Edytuj</a></p>
+                    <%}%>
+                </div>
+
+            </form>
+
+            <%if(formMode == 'showDetails' && supplier.storedProducts.length>0) {%>
+            <h2>Szczególy/produkt</h2>
+
+            <table class="table-list">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>&nbsp;Delivery date</th>
+                    <th>&nbsp;Total_Cost</th>
+                    <th>&nbsp;Perishable</th>
+                    <th>&nbsp;Total weight/kg</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%for (let d of supplier.storedProducts) { %>
+                <tr>
+                    <td><a href="/products/details/<%=d.product.productId%>"> <%=d.product.name%></a></td>
+                    <td><%=d.deliveryDate.toISOString().split('T')[0]%></td>
+                    <td><%=d.totalCost%></td>
+                    <td><%=(d.perishable  == 1) ? "True" : "False"%></td>
+                    <td><%=d.weightKg%></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+            <p><a href="/suppliers" class="back-button">Powrót</a></p>
+            <%} else if (formMode == 'showDetails') {%>
+                <h2>Szczególy/produkt</h2>
+                <p><a href="/suppliers" class="back-button">Powrót</a></p>
+            <%}%>
+
+
+        </main>
+<%- include('../../fragments/footer.ejs') %>

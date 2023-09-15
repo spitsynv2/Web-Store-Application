@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <script type="application/javascript" src="/js/validationSupplierForm.js"></script>
+    <link rel="stylesheet" href="/css/stylesheet.css" />
+    <title>Storehouse</title>
+</head>
+
+<body>
+
+<header>
+    <h1>Storehouse</h1>
+    <img src="/images/logo.png" alt="Storehouse logo" height="100" width="100">
+</header>
+
+<nav>
+    <ul>
+        <li><a href="/" class="<%= navLocation == 'main' ? 'active' : ''%>"> Strona glówna</a></li>
+        <li><a href="/products" class="<%= navLocation == 'products' ? 'active' : ''%>">Products</a></li>
+        <li><a href="/stored_products" class="<%= navLocation == 'stored_products' ? 'active' : ''%>">Stored_products</a></li>
+        <li><a href="/suppliers" class="<%= navLocation == 'suppliers' ? 'active' : ''%>">Suppliers</a></li>
+    </ul>
+</nav>

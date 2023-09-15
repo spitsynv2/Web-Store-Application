@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" href="/css/stylesheet.css" />
+    <title>Storehouse</title>
+</head>
+
+<body>
+
+<header>
+    <h1>Storehouse</h1>
+    <img src="/images/logo.png" alt="Storehouse logo" height="100" width="100">
+</header>
+
+<nav>
+    <ul>
+        <li><a href="/" class="<%= navLocation == 'main' ? 'active' : ''%>"> Strona glówna</a></li>
+        <li><a href="/products" class="<%= navLocation == 'products' ? 'active' : ''%>">Products</a></li>
+        <li><a href="/stored_products" class="<%= navLocation == 'stored_products' ? 'active' : ''%>">Stored_products</a></li>
+        <li><a href="/suppliers" class="<%= navLocation == 'suppliers' ? 'active' : ''%>">Suppliers</a></li>
+    </ul>
+</nav>
+        <main>
+            <h2>Strona główna</h2>
+            <p>Firma ATB jest korporacją w której potrzebna jest aplikacja dla przechowywani informacji o produktach w magazynie. Chcemy pamiętać informację o produktach, dostawcach, kiedy produkt został dostarczony liczba produktów kg, całkowity koszt.</p>
+            <p>ATB-Market (ukr. АТБ-Маркет) – jedno z największych przedsiębiorstw handlu detalicznego Ukrainy. Założone w 1993 roku w Dniepropietrowsku (od 2016 roku: miasto Dniepr), pod nazwą ATB-Market od 1998 roku, posiada ponad 1000 placówek detalicznych. Sieć handlowa działa w formacie tzw. dyskontu miękkiego (czyli oferującego stosunkowo dużą liczbę produktów, w tym pod cudzymi markami).
+                Liczba placówek szybko rosła: od 835 w roku 2016 i 913 w roku 2017, po 990 w roku 2018 i 1077 w roku 2019. W 2018 roku obroty przekroczyły 100 mld hrywien i w 2019 roku wyniosły 126,8 mld UAH, a średnia liczba klientów dziennie wzrosła do 3,7 mln.
+                W 2019 roku była siecią o największej liczbie placówek na Ukrainie, największych dochodach oraz drugą pod względem powierzchni (za grupą Fozzy). W tym roku klienci mogli wybierać spośród około 3 500 produktów, w tym ok. 800 sprzedawanych pod marką własną.</p>
+        </main>
+<%- include('./fragments/footer.ejs')%>

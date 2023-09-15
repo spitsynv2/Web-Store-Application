@@ -1,0 +1,41 @@
+<%- include('../../fragments/headerSupplier.ejs')%>
+        <main>
+            <h2>Lista dostawców</h2>
+            <table class="table-list">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Country_of_origin</th>
+                        <th>International</th>
+                        <th>Delivery_cost</th>
+                        <th class="actions">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <%for (let supplier of suppliers) { %>
+                <tr>
+                    <td><%=supplier.Id%></td>
+                    <td><%=supplier.Name%></td>
+                    <td><%=supplier.Country_of_origin%></td>
+                    <td><%=(supplier.International  == 1) ? "True" : "False"%></td>
+                    <td><%=supplier.Delivery_cost%></td>
+
+                    <td class="actions">
+                        <ul class="list-actions">
+                            <li><a href="/suppliers/details/<%=supplier.Id%>" class="list-actions-button-details">Szczególy</a></li>
+                            <li><a href="/suppliers/edit/<%=supplier.Id%>" class="list-actions-button-edit">Edytuj</a></li>
+                            <li><a href="/suppliers/delete/<%=supplier.Id%>" class="list-actions-button-delete">Usuń</a></li>
+                        </ul>
+                    </td>
+
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+            <p><a href="/suppliers/add" class="button-add">Dodaj nowego dostawcę</a></p>
+            
+            
+        </main>
+<%- include('../../fragments/footer.ejs')%>

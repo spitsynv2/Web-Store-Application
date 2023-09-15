@@ -1,0 +1,55 @@
+<%- include('../../fragments/headerSP.ejs')%>
+        <main>
+            <h2>Lista informacji</h2>
+            <table class="table-list">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Product_id/product</th>
+                        <th>Supplier_id/supplier</th>
+                        <th>Delivery_date</th>
+                        <th>Total_cost</th>
+                        <th>Perishable</th>
+                        <th>Weight_kg</th>
+                        <th class="actions">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <%for (let sp of sps) { %>
+                    <tr>
+                        <td><%=sp.spId%></td>
+                        <td>
+                            <select name="Product_id/product">
+                            <option selected id="productName"><%=sp.product.name%></option>
+                            <option id="productId"><%=sp.product.productId%></option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="Supplier_id/supplier">
+                            <option selected id="supplierName"><%=sp.supplier.supplierName%></option>
+                            <option id="supplierId"><%=sp.supplier.supplierId%></option>
+                            </select>
+                        </td>
+                        <td><%=sp.deliveryDate.toISOString().split('T')[0] %></td>
+                        <td><%=sp.totalCost %></td>
+                        <td><%=(sp.perishable  == 1) ? "True" : "False"%></td>
+                        <td><%=sp.weightKg %></td>
+
+                        <td class="actions">
+                            <ul class="list-actions">
+                                <li><a href="/stored_products/details/<%=sp.spId%>" class="list-actions-button-details">Szczególy</a></li>
+                                <li><a href="/stored_products/edit/<%=sp.spId%>" class="list-actions-button-edit">Edytuj</a></li>
+                                <li><a href="/stored_products/delete/<%=sp.spId%>" class="list-actions-button-delete">Usuń</a></li>
+                            </ul>
+                        </td>
+
+                    </tr>
+                <%}%>
+
+                </tbody>
+            </table>
+
+            <p><a href="/stored_products/add" class="button-add">Dodaj informację</a></p>
+
+        </main>
+<%- include('../../fragments/footer.ejs')%>

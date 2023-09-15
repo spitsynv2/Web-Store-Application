@@ -1,0 +1,218 @@
+<%- include('../../fragments/headerSP.ejs')%>
+        <main>
+            <h2><%=pageTitle%></h2>
+            <form class="form" method="post" action="<%=formAction%>" novalidate>
+                <% if (validationErrors.length > 0){%>
+                <tr>
+                    <td>
+                        <input type="hidden" name="Id" id="Id" value="<%=sp.Id%>" required/>
+                    </td>
+
+                    <td>
+                        <label for="Product_Id">Product_Id: <span class="symbol-required">*</span></label>
+
+                        <select name="Product_Id" id="Product_Id" <%= (formMode == 'showDetails') ? 'disabled' : ''%>  class="<%= validationErrors.find(e=> e.path.includes('Product_Id')) ?'error-input' : ''%>" required>
+                            <option value="" selected>-- Select option --</option>
+                            <% for (let i = 0; i<products.length; i++) { let product = products[i];%>
+                            <option value="<%= product.Id%>" label="<%=product.Name +'_'+product.Id%>" <%= (product.Id.toString() == sp.Product_Id.toString()) ? 'selected' : ''%>></option>
+                            <%}%>
+                        </select>
+
+                        <span id="errorProduct_id" class="errors-text">
+                            <%if(validationErrors.find(e=> e.path.includes('Product_Id'))) {%>
+                            <%=validationErrors.find(e=> e.path.includes('Product_Id')).message%>
+                            <%}%>
+                        </span>
+                    </td>
+
+                    <td>
+                        <label for="Supplier_Id">Supplier_Id: <span class="symbol-required">*</span></label>
+
+                        <select name="Supplier_Id" id="Supplier_Id" <%= (formMode == 'showDetails') ? 'disabled' : ''%> class="<%= validationErrors.find(e=> e.path.includes('Supplier_Id')) ?'error-input' : ''%>" required>
+                            <option value="" selected>-- Select option --</option>
+                            <% for (let i = 0; i<suppliers.length; i++) { let supplier = suppliers[i];%>
+                            <option value="<%= supplier.Id%>" label="<%=supplier.Name +'_'+supplier.Id%>"  <%=(supplier.Id.toString() == sp.Supplier_Id.toString()) ? 'selected' : ''%>></option>
+                            <%}%>
+                        </select>
+                        <span id="errorSupplier_id" class="errors-text">
+                            <%if(validationErrors.find(e=> e.path.includes('Supplier_Id'))) {%>
+                            <%=validationErrors.find(e=> e.path.includes('Supplier_Id')).message%>
+                            <%}%>
+                        </span>
+                    </td>
+
+                    <td>
+                        <td>
+                            <label for="Delivery_date">Delivery_date: <span class="symbol-required">*</span></label>
+                            <input type="date" name="Delivery_date" id="Delivery_date" value="<%=sp.Delivery_date %>" <%= (formMode == 'showDetails') ? 'disabled' : ''%> class="<%= validationErrors.find(e=> e.path.includes('Delivery_date')) ?'error-input' : ''%>"  required />
+                            <span id="errorDelivery_date" class="errors-text">
+                                <%if(validationErrors.find(e=> e.path.includes('Delivery_date'))) {%>
+                                <%=validationErrors.find(e=> e.path.includes('Delivery_date')).message%>
+                                <%}%>
+                            </span>
+                        </td>
+                    <td>
+                        <label for="Total_Cost">Total_Cost: <span class="symbol-required">*</span></label>
+                        <input type="number" name="Total_Cost" step="1" id="Total_Cost" placeholder="np. 250" value="<%= sp.Total_Cost%>" <%= (formMode == 'showDetails') ? 'disabled' : ''%> class="<%= validationErrors.find(e=> e.path.includes('Total_Cost')) ?'error-input' : ''%>" required />
+                        <span id="errorTotal_Cost" class="errors-text">
+                            <%if(validationErrors.find(e=> e.path.includes('Total_Cost'))) {%>
+                            <%=validationErrors.find(e=> e.path.includes('Total_Cost')).message%>
+                            <%}%>
+                        </span>
+                    </td>
+                    <td>
+                        <label for="Perishable">Perishable: <span class="symbol-required">*</span></label>
+                        <select name="Perishable" id="Perishable" <%= (formMode == 'showDetails') ? 'disabled' : ''%> class="<%= validationErrors.find(e=> e.path.includes('Perishable')) ?'error-input' : ''%>" required>
+                            <option value="<%=-1%>"  selected>-- Select option --</option>
+                            <option value="<%=1%>" <%=(sp.Perishable == 1) ? 'selected' : ''%> label="True"></option>
+                            <option value="<%=0%>" <%=(sp.Perishable == 0) ? 'selected' : ''%> label="False"></option>
+                        </select>
+                        <span id="errorPerishable" class="errors-text">
+                            <%if(validationErrors.find(e=> e.path.includes('Perishable'))) {%>
+                            <%=validationErrors.find(e=> e.path.includes('Perishable')).message%>
+                            <%}%>
+                        </span>
+                    </td>
+                    <td>
+                        <label for="Weight_kg">Weight_kg: <span class="symbol-required">*</span></label>
+                        <input type="number" name="Weight_kg" id="Weight_kg" step="0.5" placeholder="np. 50" value="<%=sp.Weight_kg%>" <%= (formMode == 'showDetails') ? 'disabled' : ''%> class="<%= validationErrors.find(e=> e.path.includes('Weight_kg')) ?'error-input' : ''%>" required />
+                        <span id="errorWeight_kg" class="errors-text">
+                            <%if(validationErrors.find(e=> e.path.includes('Weight_kg'))) {%>
+                            <%=validationErrors.find(e=> e.path.includes('Weight_kg')).message%>
+                            <%}%>
+                        </span>
+                    </td>
+                </tr>
+
+                <% } else {%>
+
+                <tr>
+                    <td>
+                        <input type="hidden" name="Id" id="Id" value="<%=sp.spId%>" required/>
+                    </td>
+
+                    <td>
+                        <label for="Product_Id">Product_Id: <span class="symbol-required">*</span></label>
+
+                        <select name="Product_Id" id="Product_Id" <%= (formMode == 'showDetails') ? 'disabled' : ''%> required>
+                            <option value="" selected>-- Select option --</option>
+                            <% for (let i = 0; i<products.length; i++) { let product = products[i];%>
+                            <option value="<%= product.Id%>" label="<%=product.Name +'_'+product.Id%>"  <%=(sp.spId && product.Id.toString() == sp.product.productId.toString()) ? 'selected' : ''%>></option>
+                            <%}%>
+                        </select>
+
+                        <span id="errorProduct_id"></span>
+                    </td>
+
+                    <td>
+                        <label for="Supplier_Id">Supplier_Id: <span class="symbol-required">*</span></label>
+
+                        <select name="Supplier_Id" id="Supplier_Id" <%= (formMode == 'showDetails') ? 'disabled' : ''%> required>
+                            <option value="" selected>-- Select option --</option>
+                            <% for (let i = 0; i<suppliers.length; i++) { let supplier = suppliers[i];%>
+                            <option value="<%= supplier.Id%>" label="<%=supplier.Name +'_'+supplier.Id%>"  <%=(sp.spId && supplier.Id.toString() == sp.supplier.supplierId.toString()) ? 'selected' : ''%>></option>
+                            <%}%>
+                        </select>
+                        <span id="errorSupplier_id"></span>
+                    </td>
+
+                    <td>
+                    <td>
+                        <label for="Delivery_date">Delivery_date: <span class="symbol-required">*</span></label>
+                        <input type="date" name="Delivery_date" id="Delivery_date" value="<%=(formMode != 'createNew') ? sp.deliveryDate.toISOString().split('T')[0] : sp.deliveryDate %>" <%= (formMode == 'showDetails') ? 'disabled' : ''%>  equired />
+                        <span id="errorDelivery_date"></span>
+                    </td>
+                    <td>
+                        <label for="Total_Cost">Total_Cost: <span class="symbol-required">*</span></label>
+                        <input type="number" name="Total_Cost" step="1" id="Total_Cost" placeholder="np. 250" value="<%= sp.totalCost%>" <%= (formMode == 'showDetails') ? 'disabled' : ''%> required />
+                        <span id="errorTotal_Cost"></span>
+                    </td>
+                    <td>
+                        <label for="Perishable">Perishable: <span class="symbol-required">*</span></label>
+                        <select name="Perishable" id="Perishable" <%= (formMode == 'showDetails') ? 'disabled' : ''%> required>
+                            <option value="<%=-1%>"  selected>-- Select option --</option>
+                            <option value="<%=1%>" <%=(sp.perishable == 1) ? 'selected' : ''%> label="True"></option>
+                            <option value="<%=0%>" <%=(sp.perishable == 0) ? 'selected' : ''%> label="False"></option>
+                        </select>
+                        <span id="errorPerishable"></span>
+                    </td>
+                    <td>
+                        <label for="Weight_kg">Weight_kg: <span class="symbol-required">*</span></label>
+                        <input type="number" name="Weight_kg" id="Weight_kg" step="0.5" placeholder="np. 50" value="<%=sp.weightKg%>" <%= (formMode == 'showDetails') ? 'disabled' : ''%> required />
+                        <span id="errorWeight_kg"></span>
+                    </td>
+                </tr>
+                <%}%>
+
+                <div class="form-buttons">
+                    <p id="errorsSummary" class="<%= validationErrors.length > 0 ? 'errors-text' : ''%>">
+                        <%= validationErrors.length > 0 ?'Formularz zawiera błędy' : ''%>
+                    </p>
+
+                    <%if(formMode != 'showDetails') {%>
+                    <input type="submit" value="<%=btnLabel%>" class="form-button-submit" />
+                    <a href="/stored_products" class="form-button-cancel"> Anuluj</a>
+                    <%}else {%>
+                    <p><a href="/stored_products/edit/<%=sp.spId%>" class="edit-button"> Edytuj</a></p>
+                    <%}%>
+                </div>
+
+            </form>
+
+            <%if(formMode == 'showDetails') {%>
+
+            <h2>Szczególy produkta</h2>
+
+            <table class="table-list">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>&nbsp;Name</th>
+                    <th>&nbsp;Price</th>
+                    <th>&nbsp;Expiration_date</th>
+                    <th>&nbsp;Type</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr>
+                    <td><%=sp.product.productId%></td>
+                    <td><a href="/products/details/<%=sp.product.productId%>"> <%=sp.product.name%> </a></td>
+                    <td><%=sp.product.cena%></td>
+                    <td class="tdDate"><%= sp.product.expirationDate.toISOString().split('T')[0]%></td>
+                    <td><%=sp.product.type%></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <h2>Szczególy dostawcy</h2>
+
+            <table class="table-list">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>&nbsp;Name</th>
+                    <th>&nbsp;Country_of_origin</th>
+                    <th>&nbsp;International</th>
+                    <th>&nbsp;Delivery_cost</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><%=sp.supplier.supplierId%></td>
+                    <td><a href="/suppliers/details/<%=sp.supplier.supplierId%>"> <%=sp.supplier.supplierName%> </a></td>
+                    <td><%=sp.supplier.origin%></td>
+                    <td><%=(sp.supplier.international  == 1) ? "True" : "False"%></td>
+                    <td><%=sp.supplier.deliveryCost%></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <p><a href="/stored_products" class="back-button">Powrót</a></p>
+
+            <%}%>
+
+            
+        </main>
+<%- include('../../fragments/footer.ejs')%>
